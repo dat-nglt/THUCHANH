@@ -5,45 +5,42 @@ const getHomePage = async (
   req,
   res
 ) => {
-  let userData =
-    await userModel.getAllUsers()
+  try {
+    let userData =
+      await userModel.getAllUsers()
 
-  return res.render('main', {
-    data: {
-      title: 'Home Page',
-      page: 'home',
-      rows: userData
-    }
-  })
-}
-
-const getAddUserPage = async (
-  req,
-  res
-) => {
-  let userData =
-    await userModel.getAllUsers()
-
-  return res.render('main', {
-    data: {
-      title: 'Add User Page',
-      page: 'addUser'
-    }
-  })
+    return res.render('main', {
+      data: {
+        title: 'Home Page',
+        page: 'home',
+        rows: userData
+      }
+    })
+  } catch (error) {
+    return res.render('error', {
+      data: {
+        title: 'Error',
+        page: 'error'
+      }
+    })
+  }
 }
 
 const addUser = async (req, res) => {
   const {
     username,
     fullname,
-    address
+    address,
+    email
   } = req.body
+
   try {
     const newUserId =
       await userModel.addUser(
         username,
         fullname,
-        address
+        address,
+        email
       )
     return res.redirect('/')
   } catch (error) {
@@ -59,19 +56,22 @@ const addUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   const {
-    id,
-    username,
-    fullname,
-    address
+    usernameUpdate,
+    fullnameUpdate,
+    addressUpdate,
+    emailUpdate,
   } = req.body
+
+  const idUpdate = req.params.id
 
   try {
     const updatedRows =
       await userModel.updateUser(
-        id,
-        username,
-        fullname,
-        address
+        idUpdate,
+        usernameUpdate,
+        fullnameUpdate,
+        addressUpdate,
+        emailUpdate,
       )
     return res.redirect('/')
   } catch (error) {
@@ -106,6 +106,5 @@ export default {
   getHomePage,
   addUser,
   updateUser,
-  deleteUser,
-  getAddUserPage
+  deleteUser
 }

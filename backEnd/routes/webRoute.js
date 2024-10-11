@@ -6,14 +6,14 @@ const router = express.Router()
 const initWebRoute = (app) => {
   app.get('/', HomePage.getHomePage)
 
-  app.get(
-    '/add-user-page',
-    HomePage.getAddUserPage
+  app.post(
+    '/add-user',
+    HomePage.addUser
   )
 
   app.post(
-    '/add-user-page',
-    HomePage.addUser
+    '/update-user/:id',
+    HomePage.updateUser
   )
 
   app.get(
@@ -24,6 +24,16 @@ const initWebRoute = (app) => {
   app.get('/about', getAboutPage)
 
   app.get('/contact', getContactPage)
+
+  app.get('/not-found', (req, res) => {
+    res.render('notFound')
+  })
+
+  app.use('*', (req, res) => {
+    res.redirect('/not-found') // Chuyển hướng đến đường dẫn cụ thể
+  })
+
+
 }
 
 export default initWebRoute
