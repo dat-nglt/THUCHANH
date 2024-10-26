@@ -29,15 +29,15 @@
 </style>
 
 <div class="home-container">
-  <div
-    class="d-grid gap-2 d-md-flex justify-content-md-end"
-  >
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <% if (messages) { %>
+    <div id="emailHelp" class="form-text"><%= messages %></div>
+    <% } %>
     <button
       type="button"
       class="btn btn-primary"
       data-bs-toggle="modal"
-      data-bs-target="#addModal"
-    >
+      data-bs-target="#addModal">
       Thêm người dùng
     </button>
   </div>
@@ -53,36 +53,18 @@
     </thead>
 
     <tbody>
-      <% for(let i = 0; i <
-      data.rows.length; i++) {%>
+      <% for(let i = 0; i < data.rows.length; i++) {%>
 
       <tr>
         <td scope="row"><%= i+1 %></td>
+        <td><%= data.rows[i].username %></td>
+        <td><%= data.rows[i].fullname %></td>
+        <td><%= data.rows[i].address %></td>
+        <td><%= data.rows[i].email %></td>
         <td>
-          <%= data.rows[i].username %>
-        </td>
-        <td>
-          <%= data.rows[i].fullname %>
-        </td>
-        <td>
-          <%= data.rows[i].address %>
-        </td>
-        <td>
-          <%= data.rows[i].email %>
-        </td>
-        <td>
-          <div
-            style="
-              display: flex;
-              gap: 15px;
-              justify-content: center;
-            "
-          >
+          <div style="display: flex; gap: 15px; justify-content: center">
             <a href="">
-              <i
-                class="fa-solid fa-eye"
-                style="color: #74c0fc"
-              ></i>
+              <i class="fa-solid fa-eye" style="color: #74c0fc"></i>
             </a>
             <i
               data-bs-toggle="modal"
@@ -93,15 +75,9 @@
               data-full-name="<%= data.rows[i].fullname %>"
               data-address="<%= data.rows[i].address %>"
               data-email="<%= data.rows[i].email %>"
-              data-id="<%= data.rows[i].id %>"
-            ></i>
-            <a
-              href="http://localhost:8080/delete-user/<%= data.rows[i].id %>"
-            >
-              <i
-                class="fa-solid fa-trash"
-                style="color: #a80000"
-              ></i>
+              data-id="<%= data.rows[i].id %>"></i>
+            <a href="http://localhost:8080/delete-user/<%= data.rows[i].id %>">
+              <i class="fa-solid fa-trash" style="color: #a80000"></i>
             </a>
           </div>
         </td>
@@ -116,99 +92,72 @@
   id="addModal"
   tabindex="-1"
   aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
+  aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5
-          class="modal-title"
-          id="exampleModalLabel"
-        >
-          Thêm người dùng
-        </h5>
+        <h5 class="modal-title" id="exampleModalLabel">Thêm người dùng</h5>
         <button
           type="button"
           class="btn-close"
           data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+          aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form
-          method="POST"
-          action="add-user"
-        >
+        <form method="POST" action="add-user">
           <div class="mb-3">
-            <label
-              for="username"
-              class="form-label"
-              >Tên tài khoản</label
-            >
+            <label for="username" class="form-label">Tên tài khoản</label>
             <input
               type="text"
               class="form-control"
               id="username"
               name="username"
               placeholder="Nhập tên tài khoản"
-              required
-            />
+              required />
           </div>
           <div class="mb-3">
-            <label
-              for="fullname"
-              class="form-label"
-              >Họ và tên</label
-            >
+            <label for="username" class="form-label">Mật khẩu</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              name="password"
+              placeholder="Nhập mật khẩu"
+              required />
+          </div>
+          <div class="mb-3">
+            <label for="fullname" class="form-label">Họ và tên</label>
             <input
               type="text"
               class="form-control"
               id="fullname"
               name="fullname"
               placeholder="Nhập họ và tên"
-              required
-            />
+              required />
           </div>
           <div class="mb-3">
-            <label
-              for="address"
-              class="form-label"
-              >Địa chỉ</label
-            >
+            <label for="address" class="form-label">Địa chỉ</label>
             <input
               type="text"
               class="form-control"
               id="address"
               name="address"
               placeholder="Nhập địa chỉ"
-              required
-            />
+              required />
           </div>
           <div class="mb-3">
-            <label
-              for="address"
-              class="form-label"
-              >Email</label
-            >
+            <label for="address" class="form-label">Email</label>
             <input
               type="email"
               class="form-control"
               id="email"
               name="email"
               placeholder="Nhập email"
-              required
-            />
+              required />
           </div>
 
-          <div
-            class="d-grid gap-2 d-md-flex justify-content-md-end"
-          >
-            <button
-              class="btn btn-primary me-md-2"
-              type="submit"
-            >
-              Thêm
-            </button>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button class="btn btn-primary me-md-2" type="submit">Thêm</button>
           </div>
         </form>
       </div>
@@ -221,97 +170,64 @@
   id="updateModal"
   tabindex="-1"
   aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
+  aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5
-          class="modal-title"
-          id="exampleModalLabel"
-        >
+        <h5 class="modal-title" id="exampleModalLabel">
           Cập nhật thông tin người dùng
         </h5>
         <button
           type="button"
           class="btn-close"
           data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+          aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form
-          method="POST"
-          id="updateForm"
-        >
+        <form method="post" id="updateForm">
           <div class="mb-3">
-            <label
-              for="username"
-              class="form-label"
-              >Tên tài khoản</label
-            >
+            <label for="username" class="form-label">Tên tài khoản</label>
             <input
               type="text"
               class="form-control"
               id="usernameUpdate"
               name="usernameUpdate"
               placeholder="Nhập tên tài khoản"
-              required
-            />
+              required />
           </div>
           <div class="mb-3">
-            <label
-              for="fullname"
-              class="form-label"
-              >Họ và tên</label
-            >
+            <label for="fullname" class="form-label">Họ và tên</label>
             <input
               type="text"
               class="form-control"
               id="fullnameUpdate"
               name="fullnameUpdate"
               placeholder="Nhập họ và tên"
-              required
-            />
+              required />
           </div>
           <div class="mb-3">
-            <label
-              for="address"
-              class="form-label"
-              >Địa chỉ</label
-            >
+            <label for="address" class="form-label">Địa chỉ</label>
             <input
               type="text"
               class="form-control"
               id="addressUpdate"
               name="addressUpdate"
               placeholder="Nhập địa chỉ"
-              required
-            />
+              required />
           </div>
           <div class="mb-3">
-            <label
-              for="email"
-              class="form-label"
-              >Email</label
-            >
+            <label for="email" class="form-label">Email</label>
             <input
               type="email"
               class="form-control"
               id="emailUpdate"
               name="emailUpdate"
               placeholder="Nhập email"
-              required
-            />
+              required />
           </div>
 
-          <div
-            class="d-grid gap-2 d-md-flex justify-content-md-end"
-          >
-            <button
-              class="btn btn-primary me-md-2"
-              type="submit"
-            >
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button class="btn btn-primary me-md-2" type="submit">
               Cập nhật
             </button>
           </div>
@@ -322,56 +238,23 @@
 </div>
 
 <script>
-  document
-    .querySelec torAll(
-      '.fa-pen-to-square'
-    )
-    .forEach((item) => {
-      item.addEventListener(
-        'click',
-        function () {
-          const username =
-            this.getAttribute(
-              'data-user-name'
-            )
-          const fullname =
-            this.getAttribute(
-              'data-full-name'
-            )
-          const address =
-            this.getAttribute(
-              'data-address'
-            )
-          const email =
-            this.getAttribute(
-              'data-email'
-            )
-          const id =
-            this.getAttribute(
-              'data-id'
-            )
-          document
-            .getElementById(
-              'updateForm'
-            )
-            .setAttribute(
-              'action',
-              `/update-user/${id}`
-            )
+  document.querySelectorAll('.fa-pen-to-square').forEach((item) => {
+    item.addEventListener('click', function () {
+      const username = this.getAttribute('data-user-name')
+      const fullname = this.getAttribute('data-full-name')
+      const address = this.getAttribute('data-address')
+      const email = this.getAttribute('data-email')
+      const id = this.getAttribute('data-id')
+      console.log(id)
 
-          document.getElementById(
-            'usernameUpdate'
-          ).value = username
-          document.getElementById(
-            'fullnameUpdate'
-          ).value = fullname
-          document.getElementById(
-            'addressUpdate'
-          ).value = address
-          document.getElementById(
-            'emailUpdate'
-          ).value = email
-        }
-      )
+      document
+        .getElementById('updateForm')
+        .setAttribute('action', `/update-user/${id}`)
+
+      document.getElementById('usernameUpdate').value = username
+      document.getElementById('fullnameUpdate').value = fullname
+      document.getElementById('addressUpdate').value = address
+      document.getElementById('emailUpdate').value = email
     })
+  })
 </script>

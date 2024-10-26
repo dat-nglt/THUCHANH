@@ -8,4 +8,7 @@ const pool = mysql.createPool({
 })
 
 const connection = pool.promise()
+if (connection) {
+  console.log("Connected")
+}
 export default connection

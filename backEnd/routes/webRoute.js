@@ -1,39 +1,50 @@
 import express from 'express'
+import middleWare from './middleWare'
 import HomePage from '../controllers/HomeController'
 import getAboutPage from '../controllers/AboutController'
 import getContactPage from '../controllers/ContactController'
+import LoginController from '../controllers/LoginController'
+
 const router = express.Router()
+
 const initWebRoute = (app) => {
-  app.get('/', HomePage.getHomePage)
+  router.get('/', HomePage.getHomePage)
 
-  app.post(
-    '/add-user',
-    HomePage.addUser
-  )
+  router.get('/login', LoginController.getLoginPage)
+  router.post('/login', LoginController.handleLogin)
 
-  app.post(
+  router.get('/logout', (req, res) => {
+    req.session.destroy()
+    return res.redirect('/')
+  })
+
+  router.post('/add-user', middleWare.checkUserPermissionAdd, HomePage.addUser)
+
+  router.post(
     '/update-user/:id',
+    middleWare.checkUserPermissionUpdate,
     HomePage.updateUser
   )
 
-  app.get(
+  router.get(
     '/delete-user/:id',
+    middleWare.checkUserPermissionUpdate,
     HomePage.deleteUser
   )
 
-  app.get('/about', getAboutPage)
+  router.get('/about', getAboutPage)
 
-  app.get('/contact', getContactPage)
+  router.get('/contact', getContactPage)
 
-  app.get('/not-found', (req, res) => {
+  router.get('/not-found', (req, res) => {
     res.render('notFound')
   })
 
-  app.use('*', (req, res) => {
+  router.use('*', (req, res) => {
     res.redirect('/not-found') // Chuyển hướng đến đường dẫn cụ thể
   })
 
-
+  return app.use('/', router)
 }
 
 export default initWebRoute
