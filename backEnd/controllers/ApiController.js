@@ -2,6 +2,8 @@ import express from 'express'
 import userModel from '../models/userModel'
 import bcrypt from 'bcryptjs'
 import session from 'express-session'
+import groupModel from '../models/groupModel'
+import productModel from '../models/productModel'
 
 const login = (req, res) => {
   try {
@@ -101,4 +103,56 @@ const updateUser = async (req, res) => {
   }
 }
 
-export default { login, addUser, deleteUser, updateUser, getAllUsers }
+const getAllGroup = async (req, res) => {
+  try {
+    let groupData = await groupModel.getAllGroup()
+    return res.status(200).json({
+      message: 'Lấy dữ liệu thành công',
+      data: groupData
+    })
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: 'Lấy dữ liệu nhóm không thành công' })
+  }
+}
+
+const getAllProducts = async (req, res) => {
+  try {
+    let productsData = await productModel.getAllProducts()
+    return res.status(200).json({
+      message: 'Lấy dữ liệu sản phẩm thành công',
+      data: productsData
+    })
+  } catch (error) {
+    return res.status(500).json({
+      message: 'Lấy dữ liệu sản phẩm không thành công'
+    })
+  }
+}
+
+const getDetailsProduct = async (req, res) => {
+  try {
+    const productID = req.params.id
+    let detailsProductData = await productModel.getDetailsProduct(productID)
+    return res.status(200).json({
+      message: 'Lấy dữ liệu sản phẩm thành công',
+      data: detailsProductData
+    })
+  } catch (error) {
+    return res.status(500).json({
+      message: 'Lấy dữ liệu sản phẩm không thành công'
+    })
+  }
+}
+
+export default {
+  login,
+  addUser,
+  deleteUser,
+  updateUser,
+  getAllUsers,
+  getAllGroup,
+  getAllProducts,
+  getDetailsProduct
+}

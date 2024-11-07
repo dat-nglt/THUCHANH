@@ -7,8 +7,17 @@ import path from 'path'
 import bodyParser from 'body-parser'
 import createSession from './configs/session'
 import flash from 'connect-flash'
+import cors from 'cors'
+
+const corsOptions = {
+  origin: ['http://localhost:3000', 'https://localhost:3000'],
+  optionSuccessStatus: 200
+}
+
 
 const app = express()
+
+app.use(cors(corsOptions))
 
 app.use(flash())
 

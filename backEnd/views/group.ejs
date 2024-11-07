@@ -45,11 +45,9 @@
   <table>
     <thead>
       <th>STT</th>
-      <th>Tên tài khoản</th>
-      <th>Họ và tên</th>
-      <th>Địa chỉ</th>
-      <th>Email</th>
-      <th>Thiết lập riêng</th>
+      <th>Mã nhóm</th>
+      <th>Tên nhóm sản phẩm</th>
+      <!-- <th>Thiết lập riêng</th> -->
     </thead>
 
     <tbody>
@@ -57,11 +55,9 @@
 
       <tr>
         <td scope="row"><%= i+1 %></td>
-        <td><%= data.rows[i].username %></td>
-        <td><%= data.rows[i].fullname %></td>
-        <td><%= data.rows[i].address %></td>
-        <td><%= data.rows[i].email %></td>
-        <td>
+        <td><%= data.rows[i].idnhom %></td>
+        <td><%= data.rows[i].ten %></td>
+        <!-- <td>
           <div style="display: flex; gap: 15px; justify-content: center">
             <a href="">
               <i class="fa-solid fa-eye" style="color: #74c0fc"></i>
@@ -71,16 +67,14 @@
               data-bs-target="#updateModal"
               class="fa-solid fa-pen-to-square"
               style="color: #74c0fc"
-              data-user-name="<%= data.rows[i].username %>"
-              data-full-name="<%= data.rows[i].fullname %>"
-              data-address="<%= data.rows[i].address %>"
-              data-email="<%= data.rows[i].email %>"
+              data-user-name="<%= data.rows[i].idnhom %>"
+              data-full-name="<%= data.rows[i].ten %>"
               data-id="<%= data.rows[i].id %>"></i>
             <a href="http://localhost:8080/delete-user/<%= data.rows[i].id %>">
               <i class="fa-solid fa-trash" style="color: #a80000"></i>
             </a>
           </div>
-        </td>
+        </td> -->
       </tr>
       <%}%>
     </tbody>
@@ -245,6 +239,7 @@
       const address = this.getAttribute('data-address')
       const email = this.getAttribute('data-email')
       const id = this.getAttribute('data-id')
+
       document
         .getElementById('updateForm')
         .setAttribute('action', `/update-user/${id}`)

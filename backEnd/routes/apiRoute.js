@@ -11,6 +11,21 @@ const initApiRoute = (app) => {
     ApiController.getAllUsers
   )
 
+  router.get(
+    '/get-all-group',
+    ApiController.getAllGroup
+  )
+
+  router.get(
+    '/get-all-products',
+    ApiController.getAllProducts
+  )
+
+  router.get(
+    '/get-details-products/:id',
+    ApiController.getDetailsProduct
+  )
+
   router.post('/login', ApiController.login)
 
   router.post(

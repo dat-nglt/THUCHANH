@@ -2,8 +2,6 @@ const checkUserPermissionUpdate = (req, res, next) => {
   const userId = req.session.user?.id
   const userRole = req.session.user?.role
   const paramId = req.params.id // Lấy ID từ URL params
-  console.log(paramId === userId)
-
   if (userId == paramId || userRole === 2) {
     next()
   } else {
@@ -14,8 +12,6 @@ const checkUserPermissionUpdate = (req, res, next) => {
 }
 
 const checkUserPermissionAdd = (req, res, next) => {
-  console.log(req.session.user)
-
   if (!req.session.user) {
     next()
   } else {
