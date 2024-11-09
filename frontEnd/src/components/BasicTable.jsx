@@ -18,7 +18,7 @@ export default function BasicTable(props) {
           <TableRow>
             <TableCell align="left">STT</TableCell>
             {props.columnTitle.map((title, index) => (
-              <TableCell align="center">{title}</TableCell>
+              <TableCell align="center" key={index}>{title}</TableCell>
             ))}
           </TableRow>
         </TableHead>

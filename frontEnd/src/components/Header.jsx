@@ -46,7 +46,7 @@ function Header(props) {
           alignItems: 'center',
         }}
       >
-        <Link>
+        <Link to={'/dang-nhap'}>
           <Button variant='contained' color='secondary'>
             Đăng nhập
           </Button>

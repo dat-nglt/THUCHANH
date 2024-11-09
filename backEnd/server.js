@@ -10,10 +10,10 @@ import flash from 'connect-flash'
 import cors from 'cors'
 
 const corsOptions = {
-  origin: ['http://localhost:3000', 'https://localhost:3000'],
-  optionSuccessStatus: 200
+  origin: 'http://localhost:3000',
+  optionSuccessStatus: 200,
+  credentials: true
 }
-
 
 const app = express()
 

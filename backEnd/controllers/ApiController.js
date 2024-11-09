@@ -1,18 +1,29 @@
 import express from 'express'
 import userModel from '../models/userModel'
 import bcrypt from 'bcryptjs'
-import session from 'express-session'
 import groupModel from '../models/groupModel'
 import productModel from '../models/productModel'
+import jwt from 'jsonwebtoken'
+import cookieParser from 'cookie-parser'
 
 const login = (req, res) => {
-  try {
-    const { username, password } = req.body
-    return res.status(200).json({
-      message: 'Đăng nhập thành công',
-      data: req.body
+  const SECRET_KEY = process.env.JWT_SECRET || 'defaultSecretKey'
+  const { userName, password } = req.body
+  // return res.status(200).json({ userName, password })
+  if (userName === 'admin' && password === 'admin') {
+    const token = jwt.sign({ userName }, SECRET_KEY, { expiresIn: '1h' })
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 60 * 60 * 1000
     })
-  } catch (error) {}
+    res.status(200).json({ message: 'Đăng nhập thành công' });
+  } else {
+    return res
+      .status(401)
+      .json({ message: 'Thông tin đăng nhập không chính xác' })
+  }
 }
 
 const getAllUsers = async (req, res) => {

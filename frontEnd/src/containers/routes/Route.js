@@ -1,8 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom'
 import App from '../../App'
-import Group from '../../components/Group'
-import Products from '../../components/Products'
-import DetailsProduct from '../../components/DetailsProduct'
+import Group from '../../pages/Group'
+import Products from '../../pages/Products'
+import DetailsProduct from '../../pages/DetailsProduct'
+import Login from '../../pages/Login'
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ export const router = createBrowserRouter([
       {
         path: '/get-details-products/:id',
         element: <DetailsProduct />
+      },
+      {
+        path: '/dang-nhap',
+        element: <Login />
       }
     ]
   },

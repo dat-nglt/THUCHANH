@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import ProductCard from './ProductCard';
+import ProductCard from '../components/ProductCard';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import productsService from '../services/productsService';
 function DetailsProduct(props) {
 
   const params = useParams();
   const [product, setProduct] = useState({});
   const [error, setError] = useState();
 
-  console.log(product);
 
 
   const fetchGroupData = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/v1/get-details-products/${params.id}`);
-      setProduct(response.data.data)
+      const response = await productsService.getDetailsProduct(params)
+      setProduct(response.data)
     } catch (error) {
       setError(error);
     }
