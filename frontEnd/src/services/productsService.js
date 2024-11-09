@@ -1,26 +1,22 @@
-import axios from 'axios'
+import apiMiddleware from '../apiMiddleware' // Import apiMiddleware đã cấu hình từ trước
 
 const getAllProducts = async () => {
   try {
-    let response = await axios.get(
-      'http://localhost:8080/api/v1/get-all-products'
-    )
+    const response = await apiMiddleware.get('/get-all-products') // Sử dụng apiMiddleware thay vì axios trực tiếp
     return response.data
   } catch (error) {
-    return error
+    return error.response || error // Trả về lỗi nếu có
   }
 }
 
 const getDetailsProduct = async (params) => {
   try {
-    let response = await axios.get(
-      `http://localhost:8080/api/v1/get-details-products/${params.id}`
-    )
-    console.log(response.data)
-
+    const response = await apiMiddleware.get(
+      `/get-details-products/${params.id}`
+    ) // Dùng apiMiddleware thay vì axios trực tiếp
     return response.data
   } catch (error) {
-    return error
+    return error.response || error // Trả về lỗi nếu có
   }
 }
 

@@ -8,6 +8,7 @@ import bodyParser from 'body-parser'
 import createSession from './configs/session'
 import flash from 'connect-flash'
 import cors from 'cors'
+import cookieParser from 'cookie-parser'
 
 const corsOptions = {
   origin: 'http://localhost:3000',
@@ -34,6 +35,7 @@ app.use(
 createSession(app)
 
 app.use(bodyParser.json())
+app.use(cookieParser())
 
 viewEngine(app)
 

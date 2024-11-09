@@ -1,8 +1,8 @@
-import axios from 'axios'
+import apiMiddleware from '../apiMiddleware'
 
 const getAllGroup = async () => {
   try {
-    let response = await axios.get('http://localhost:8080/api/v1/get-all-group')
+    let response = await apiMiddleware.get('/get-all-group')
     return response.data
   } catch (error) {
     return error

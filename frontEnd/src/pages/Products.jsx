@@ -22,7 +22,7 @@ function Products(props) {
         const response = await productsService.getAllProducts();
         setProductData(response.data)
         setLoading(false)
-      }, 1500);
+      }, 1000);
     } catch (error) {
       setError('Không thể tải dữ liệu');
       setLoading(false)

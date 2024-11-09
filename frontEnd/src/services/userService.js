@@ -1,11 +1,11 @@
 import axios from 'axios'
 
-const loginSerivce = async (userName, password) => {
+const loginSerivce = async (username, password) => {
   try {
     let response = await axios.post(
       'http://localhost:8080/api/v1/login',
       {
-        userName,
+        username,
         password
       },
       { withCredentials: true }

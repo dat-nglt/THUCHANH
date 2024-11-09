@@ -1,20 +1,21 @@
 const jwt = require('jsonwebtoken')
-const secretKey = process.env.SECRET_KEY || 'default_secret_key'
 
 const authenticateJWT = (req, res, next) => {
-  const token = req.cookies.token // Lấy token từ cookie
+  try {
+    const token = req.cookies.token
 
-  if (token) {
-    jwt.verify(token, secretKey, (err, user) => {
-      if (err) {
-        return res.sendStatus(403) // Forbidden
-      }
-      req.user = user // Thêm thông tin người dùng vào request
-      next() // Tiếp tục đến các route khác
-    })
-  } else {
-    res.sendStatus(401) // Unauthorized
+    if (token) {
+      const user = jwt.verify(token, 'datdeptrainhatvutrunay')
+      req.user = user
+      next()
+    } else {
+      return res.status(401).json({
+        message: 'Bạn không có quyền sử dụng chức năng này!'
+      })
+    }
+  } catch (error) {
+    console.log(secretKey)
   }
 }
 
-module.exports = authenticateJWT
+export default authenticateJWT

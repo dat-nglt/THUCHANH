@@ -4,21 +4,21 @@ import bcrypt from 'bcryptjs'
 import groupModel from '../models/groupModel'
 import productModel from '../models/productModel'
 import jwt from 'jsonwebtoken'
-import cookieParser from 'cookie-parser'
 
 const login = (req, res) => {
   const SECRET_KEY = process.env.JWT_SECRET || 'defaultSecretKey'
-  const { userName, password } = req.body
-  // return res.status(200).json({ userName, password })
-  if (userName === 'admin' && password === 'admin') {
-    const token = jwt.sign({ userName }, SECRET_KEY, { expiresIn: '1h' })
-    res.cookie('token', token, {
+  const { username, password } = req.body
+  if (username === 'admin' && password === 'admin') {
+    const accessToken = jwt.sign({ username }, SECRET_KEY, { expiresIn: '1h' })
+    res.cookie('token', accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
       maxAge: 60 * 60 * 1000
     })
-    res.status(200).json({ message: 'Đăng nhập thành công' });
+    res
+      .status(200)
+      .json({ message: 'Đăng nhập thành công', accessToken: accessToken })
   } else {
     return res
       .status(401)

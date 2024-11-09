@@ -1,6 +1,7 @@
 import express from 'express'
 import ApiController from '../controllers/ApiController'
 import middleWare from './middleWare'
+import authenticateJWT from '../middleware/authMiddleware'
 
 const router = express.Router()
 
@@ -11,20 +12,11 @@ const initApiRoute = (app) => {
     ApiController.getAllUsers
   )
 
-  router.get(
-    '/get-all-group',
-    ApiController.getAllGroup
-  )
+  router.get('/get-all-group', authenticateJWT, ApiController.getAllGroup)
 
-  router.get(
-    '/get-all-products',
-    ApiController.getAllProducts
-  )
+  router.get('/get-all-products', authenticateJWT, ApiController.getAllProducts)
 
-  router.get(
-    '/get-details-products/:id',
-    ApiController.getDetailsProduct
-  )
+  router.get('/get-details-products/:id', authenticateJWT, ApiController.getDetailsProduct)
 
   router.post('/login', ApiController.login)
 

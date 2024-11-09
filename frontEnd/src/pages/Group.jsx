@@ -20,9 +20,11 @@ function Group(props) {
       setError(null);
       setTimeout(async () => {
         let response = await groupService.getAllGroup();
-        setGroupData(response.data);
-        setLoading(false)
-      }, 1500);
+        if (response.data) {
+          setLoading(false)
+          setGroupData(response.data);
+        }
+      }, 1000);
 
     } catch (error) {
       setError('Không thể tải dữ liệu');
